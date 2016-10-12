@@ -1,0 +1,36 @@
+<div ng-controller="Shell as shell">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header pull-left">
+                <span class="navbar-brand" href="">SMD Supplies</span>
+                <ul ng-hide="shell.loginShow" class="nav navbar-nav">
+                    <li ng-show="shell.isAdmin()" ng-class="{'active': shell.useSuppliesShow}">
+                        <a href="" ng-click="shell.useSuppliesClick()">Use Supplies</a>
+                    </li>
+                    <li ng-class="{'active': shell.editInventoryShow}">
+                        <a href="" ng-click="shell.editInventoryClick()">Edit Inventory</a>
+                    </li>
+                    <li ng-show="shell.isAdmin()" ng-class="{'active': shell.historyShow}">
+                        <a href="" ng-click="shell.historyClick()">History</a>
+                    </li>
+                </ul>
+            </div>
+            <div ng-hide="shell.loginShow" class="navbar-header pull-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="" ng-click="shell.logoutClick()">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div ng-show="shell.loginShow" ng-include="'app/views/login.html'"></div>
+    <div ng-show="shell.useSuppliesShow" ng-include="'app/views/supplyList.html'"></div>
+    <div ng-show="shell.editInventoryShow" ng-include="'app/views/editList.html'"></div>
+    <div ng-show="shell.historyShow && shell.isAdmin()" ng-include="'app/views/log.html'"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-center">Made with  <i class="fa fa-heart"></i>  by Adam</p>
+        </div>
+    </footer>
+</div>

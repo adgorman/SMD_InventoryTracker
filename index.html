@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SMD Inventory</title>
+
+    <!--<link rel="shortcut icon" type="image/png" href="/favicon.png"/>-->
+
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div ng-include="'app/views/shell.html'"></div>
+
+<!-- External Scripts -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+
+<!-- App Scripts -->
+<script src="app/app.js"></script>
+
+<script src="app/controllers/supplyList.js"></script>
+<script src="app/controllers/editList.js"></script>
+<script src="app/controllers/log.js"></script>
+<script src="app/controllers/login.js"></script>
+<script src="app/controllers/shell.js"></script>
+
+<script src="app/services/applicationData.js"></script>
+<script src="app/services/firebaseDataService.js"></script>
+
+
+</body>
+</html>

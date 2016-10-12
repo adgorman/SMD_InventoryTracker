@@ -1,0 +1,40 @@
+<div ng-controller="SupplyList as supplyList" class="container">
+    <div class="col-xs-6">
+        <h4>Add Items</h4>
+        <div class="item-group">
+            <input type="text" ng-model="supplyList.search" class="form-control" placeholder="Search" />
+        </div>
+        <div class="item-group">
+            <div ng-repeat="item in supplyList.inventory | filter:supplyList.search" ng-click="supplyList.addItem(item)" class="row item-row selectable" ng-class="{'disabled': item.quantity == 0}">
+                <div><strong>{{item.name}}</strong></div>
+                <div>{{item.storageArea}}</div>
+                <div class="inventory-item-quantity">
+                    <span class="item-count">{{item.quantity}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <h4>Used Items List</h4>
+        <div class="item-group">
+            <input type="date" ng-model="supplyList.date" class="form-control" placeholder="Date" />
+        </div>
+        <div class="item-group">
+            <input type="text" ng-model="supplyList.location" class="form-control" placeholder="Location" />
+        </div>
+        <div class="item-group">
+            <div ng-repeat="item in supplyList.usedSupplies" class="row item-row">
+                <div class="col-xs-9 item-column">
+                    <span>{{supplyList.getItemName(item.itemID)}}</span>
+                </div>
+                <div class="col-xs-3 accessory-column text-right">
+                    <span class="item-count">{{item.quantity}}</span>
+                    <a href="" ng-click="supplyList.removeItem(item.itemID)"><i class="fa fa-lg fa-trash-o"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item-group">
+            <input type="button" class="form-control btn btn-primary" value="Save" ng-click="supplyList.save()" ng-class="{'disabled': supplyList.usedSupplies.length == 0}" />
+        </div>
+    </div>
+</div>

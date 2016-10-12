@@ -1,0 +1,139 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Sticky Header */
+body {
+    margin-bottom: 60px;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+    .navbar .navbar-brand {
+        cursor: default;
+    }
+    .navbar .navbar-brand:hover {
+        color: #ffffff;
+    }
+
+/* Sticky Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #ECEFF1;
+}
+    .footer p {
+        padding: 10px;
+        margin: 0;
+        color: #78909C
+    }
+
+/* Login Panel */
+#login-panel .panel {
+    border-width: 2px;
+}
+
+#login-panel #login-logo {
+    display: block;
+    margin: 0 auto;
+    width: 130px;
+}
+
+/* Lists */
+.item-row:first-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+.item-row:last-child {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.item-row {
+    padding: 15px 15px;
+    margin: 0 0 -2px 0;
+    background-color: #ffffff;
+    border: 2px solid #dce4ec;
+    position: relative;
+}
+
+.item-row.selectable:hover {
+    cursor: pointer;
+    background-color: #ECEFF1;
+}
+
+.item-row.selectable.disabled {
+    cursor: not-allowed;
+    background-color: #CFD8DC;
+}
+
+.item-row.selectable.selected {
+    background-color: #78909C;
+    color: white;
+}
+
+.header-item-row {
+    padding: 0 15px 0 15px;
+    margin: 0 0 -2px 0;
+}
+
+/* Inventory List */
+.item-group {
+    margin-top: 20px;
+}
+
+.item-row .item-column {
+    padding-left: 0;
+}
+
+.item-row .accessory-column {
+    padding-right: 0;
+}
+
+.item-row .edit-item {
+    margin-right: 15px;
+}
+
+.item-row .item-count {
+    background-color: #ECEFF1;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-right: 10px;
+}
+
+    .item-row.selectable.selected .item-count {
+        background-color: #78909C;
+        border: 2px solid white;
+    }
+
+.inventory-item-quantity {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Disable Navbar Collapse */
+.navbar-collapse.collapse{
+    display: block !important;
+}
+.navbar-nav>li, .navbar-nav{
+    float: left !important;
+}
+.navbar-nav.navbar-right:last-child{
+    margin-right: -15px !important;
+}
+.navbar-right{
+    float: right !important;
+}
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header {
+    margin-right: 0;
+}
+.nav.navbar-nav {
+    margin-left: 0;
+}

@@ -1,0 +1,55 @@
+<div ng-controller="EditList as editList" class="container">
+    <div class="col-xs-6">
+        <h4>Item List</h4>
+        <div class="item-group">
+            <div class="input-group">
+                <input type="text" ng-model="editList.search" class="form-control" placeholder="Search" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="item-group">
+            <div
+                    ng-repeat="item in editList.inventory | filter:editList.search"
+                    ng-click="editList.editItem($index)"
+                    ng-class="{'selected':editList.selectedItemIndex == $index}"
+                    class="row item-row selectable">
+                <div><strong>{{item.name}}</strong></div>
+                <div>{{item.storageArea}}</div>
+                <div class="inventory-item-quantity">
+                    <span class="item-count">{{item.quantity}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <h4>Edit Item</h4>
+        <div class="item-group" ng-hide="editList.selectedItemIndex !== null">
+            <i>No Item Selected.</i>
+        </div>
+        <form ng-show="editList.selectedItemIndex !== null">
+            <div class="item-group">
+                <label for="edit-item-name">Name</label>
+                <input type="text" id="edit-item-name" class="form-control" placeholder="Name" ng-model="editList.selectedItem.name" />
+            </div>
+            <div class="item-group">
+                <label for="edit-item-quantity">Quantity</label>
+                <input type="number" id="edit-item-quantity" class="form-control" placeholder="Quantity" ng-model="editList.selectedItem.quantity" />
+            </div>
+            <div class="item-group">
+                <label for="edit-item-location">Location</label>
+                <input type="text" id="edit-item-location" class="form-control" placeholder="Location" ng-model="editList.selectedItem.storageArea" />
+            </div>
+            <div class="item-group">
+                <label for="edit-item-cost">Cost</label>
+                <input type="number" id="edit-item-cost" class="form-control" placeholder="Price" ng-model="editList.selectedItem.cost" />
+            </div>
+            <div class="item-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-default">Cancel</button>
+                <button class="btn btn-danger">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
