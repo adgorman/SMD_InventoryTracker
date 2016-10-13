@@ -5,9 +5,10 @@
             <input type="text" ng-model="supplyList.search" class="form-control" placeholder="Search" />
         </div>
         <div class="item-group">
-            <div ng-repeat="item in supplyList.inventory | filter:supplyList.search" ng-click="supplyList.addItem(item)" class="row item-row selectable" ng-class="{'disabled': item.quantity == 0}">
+            <div ng-repeat="item in supplyList.items | toArray | filter:supplyList.search | orderBy:'name'" ng-click="supplyList.addItem(item.$key)"
+                 class="row item-row selectable" ng-class="{'disabled': item.quantity == 0}">
                 <div><strong>{{item.name}}</strong></div>
-                <div>{{item.storageArea}}</div>
+                <div>{{supplyList.storageAreas[item.storageAreaID].name}}</div>
                 <div class="inventory-item-quantity">
                     <span class="item-count">{{item.quantity}}</span>
                 </div>
@@ -25,7 +26,7 @@
         <div class="item-group">
             <div ng-repeat="item in supplyList.usedSupplies" class="row item-row">
                 <div class="col-xs-9 item-column">
-                    <span>{{supplyList.getItemName(item.itemID)}}</span>
+                    <span>{{supplyList.items[item.itemID].name}}</span>
                 </div>
                 <div class="col-xs-3 accessory-column text-right">
                     <span class="item-count">{{item.quantity}}</span>

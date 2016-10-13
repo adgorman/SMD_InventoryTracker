@@ -8,10 +8,11 @@
         .module('app')
         .controller('EditList', EditList);
 
-    EditList.$inject = ['applicationData'];
+    EditList.$inject = ['applicationData', '$uibModal'];
 
-    function EditList(applicationData, $scope) {
+    function EditList(applicationData, $uibModal, $scope) {
         var vm = this;
+        vm.addItem = addItem;
         vm.cancelEdit = cancelEdit;
         vm.date = new Date();
         vm.editItem = editItem;
@@ -46,6 +47,16 @@
 
         function activate() {
             // pull from server inventory, storage areas
+        }
+
+        function addItem() {
+            var modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'app/views/addModal.html',
+                controller: 'AddModal',
+                controllerAs: 'addModal',
+                size: 'large'
+            });
         }
 
         function cancelEdit() {

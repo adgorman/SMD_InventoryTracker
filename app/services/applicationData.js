@@ -11,39 +11,46 @@
     applicationData.$inject = ['$q', 'firebaseDataService'];
 
     function applicationData($q, firebaseDataService) {
-        var itemList = null;
-        var storageAreaList = null;
+        var historyLists = null;
+        var items = null;
+        var storageAreas = null;
         var serviceInitialized = false;
         var user = null;
 
         var service = {
-            itemList: itemList,
-            storageAreaList: storageAreaList,
+            historyLists: historyLists,
+            items: items,
+            storageAreas: storageAreas,
             serviceInitialized: serviceInitialized,
             user: user
         };
 
-        initService();
+        initService(service);
         return service;
 
         // Private Functions
 
-        function initService() {
-            // $q.all([getItemList(), getStorageAreaList()]).then(function() {
-            //     // Add storage list to item list
-            //     // Set service as initialized
-            // });
-        }
-
-        function getStorageAreaList() {
-            return firebaseDataService.getStorageAreaList().then(function(data) {
-                // Set storage list
+        function initService(service) {
+            $q.all([getHistoryLists(), getItems(), getStorageAreas()]).then(function() {
+                service.serviceInitialized = true;
             });
         }
 
-        function getItemList() {
-            return firebaseDataService.getItemList().then(function(data) {
-                // Set item list
+        function getHistoryLists() {
+            return firebaseDataService.getHistoryLists().then(function(data) {
+                service.historyLists = data;
+            });
+        }
+
+        function getStorageAreas() {
+            return firebaseDataService.getStorageAreas().then(function(data) {
+                service.storageAreas = data;
+            });
+        }
+
+        function getItems() {
+            return firebaseDataService.getItems().then(function(data) {
+                service.items = data;
             });
         }
     }

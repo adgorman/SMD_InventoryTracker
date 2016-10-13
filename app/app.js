@@ -6,6 +6,7 @@
 
     angular.module('app', [
         'ui.bootstrap',
-        'firebase'
+        'firebase',
+        'angular-toArrayFilter'
     ]);
 })();

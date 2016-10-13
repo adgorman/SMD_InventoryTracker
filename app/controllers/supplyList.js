@@ -8,30 +8,18 @@
         .module('app')
         .controller('SupplyList', SupplyList);
 
-    SupplyList.$inject = ['applicationData'];
+    SupplyList.$inject = ['applicationData', 'firebaseDataService', '$q', '$scope'];
 
-    function SupplyList(applicationData, $scope) {
+    function SupplyList(applicationData, firebaseDataService, $q, $scope) {
         var vm = this;
         vm.addItem = addItem;
         vm.date = new Date();
-        vm.inventory = [
-            {name: 'Hydrocodone', quantity: 4, storageArea: 'Bag 1', cost: 10, id: 0},
-            {name: 'Zocor', quantity: 1, storageArea: 'Bag 2', cost: 1, id: 1},
-            {name: 'Lisinopril', quantity: 10, storageArea: 'Bag 1', cost: 30, id: 2},
-            {name: 'Synthroid', quantity: 10, storageArea: 'Bag 3', cost: 20, id: 3},
-            {name: 'Norvasc', quantity: 20, storageArea: 'Bag 3', cost: 20, id: 4},
-            {name: 'Prilosec', quantity: 36, storageArea: 'Bag 1', cost: 20, id: 5},
-            {name: 'Azithromycin', quantity: 5, storageArea: 'Bag 2', cost: 20, id: 6},
-            {name: 'Amoxicillin', quantity: 120, storageArea: 'Bag 2', cost: 20, id: 7},
-            {name: 'Glucophage', quantity: 0, storageArea: 'Bag 2', cost: 20, id: 8},
-            {name: 'Hydrochlorothiazide', quantity: 10, storageArea: 'Bag 3', cost: 20, id: 9}
-        ];
-        vm.inventory = _.sortBy(vm.inventory, function(item) { return item.name; });
-        vm.getItemName = getItemName;
+        vm.items = [];
         vm.location = "";
         vm.removeItem = removeItem;
         vm.save = save;
         vm.search = "";
+        vm.storageAreas = [];
         vm.usedSupplies = [];
 
         activate();
@@ -40,43 +28,64 @@
             // pull from server inventory, storage areas
         }
 
-        function addItem(item) {
+        function addItem(itemID) {
+            var item = vm.items[itemID];
             if(item.quantity <= 0) {
                 return;
             }
             item.quantity--;
 
-            var usedSupply =  _.findWhere(vm.usedSupplies, {itemID: item.id});
+            var usedSupply =  _.findWhere(vm.usedSupplies, {itemID: itemID});
             if(_.isUndefined(usedSupply)) {
                 vm.usedSupplies.push({
-                    itemID: item.id,
+                    itemID: itemID,
                     quantity: 1
                 });
-                vm.usedSupplies = _.sortBy(vm.usedSupplies, function(item) { return getItemName(item.itemID); });
+                vm.usedSupplies = _.sortBy(vm.usedSupplies, function(item) { return vm.items[itemID].name; });
             } else {
                 usedSupply.quantity++;
             }
         }
 
-        function getItemName(itemID) {
-            debugger;
-            return _.findWhere(vm.inventory, {id: itemID}).name;
-        }
-
-        function removeItem(usedSupplyIndex) {
-            var usedItem = _.findWhere(vm.usedSupplies, {itemID: usedSupplyIndex});
+        function removeItem(usedSupplyItemID) {
+            var usedItem = _.findWhere(vm.usedSupplies, {itemID: usedSupplyItemID});
             usedItem.quantity--;
             if(usedItem.quantity == 0) {
                 vm.usedSupplies = _.without(vm.usedSupplies, usedItem);
             }
-            _.findWhere(vm.inventory, {id: usedItem.itemID}).quantity++;
+            vm.items[usedSupplyItemID].quantity++;
         }
 
         function save() {
             if(_.isEmpty(vm.usedSupplies)) {
                 return;
             }
-            // add to server
+
+            var historyList = {
+                date: vm.date,
+                itemList: angular.copy(vm.usedSupplies),
+                location: vm.location
+            };
+            var promises = [firebaseDataService.pushHistoryList(historyList)];
+
+            _.each(vm.usedSupplies, function(item) {
+                promises.push(firebaseDataService.setItem(item.itemID, angular.copy(vm.items[item.itemID])));
+            });
+
+            $q.all(promises).then(function () {
+                vm.date = new Date();
+                vm.location = "";
+                vm.usedSupplies = [];
+                vm.search = "";
+            });
         }
+
+        $scope.$watch(function() { return applicationData.serviceInitialized; }, function(initialized) {
+            if(!initialized) {
+                return;
+            }
+            vm.items = applicationData.items;
+            vm.storageAreas = applicationData.storageAreas;
+        });
     }
 })();
