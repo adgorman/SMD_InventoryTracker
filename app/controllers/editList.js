@@ -13,6 +13,7 @@
     function EditList(applicationData, $uibModal, $scope) {
         var vm = this;
         vm.addItem = addItem;
+        vm.addItemModalInstance = null;
         vm.editItem = editItem;
         vm.items = [];
         vm.remove = remove;
@@ -34,7 +35,7 @@
         }
 
         function addItem() {
-            var modalInstance = $uibModal.open({
+            vm.addItemModalInstance = $uibModal.open({
                 animation: false,
                 templateUrl: 'app/views/addModal.html',
                 controller: 'AddModal',
@@ -71,6 +72,16 @@
             }
             vm.items = applicationData.items;
             vm.storageAreas = applicationData.storageAreas;
+        });
+
+        $scope.$watch(function() { return applicationData.itemsModified; }, function(modified) {
+            if(!modified) {
+                return;
+            }
+            vm.items = applicationData.items;
+            if(vm.addItemModalInstance) {
+                vm.addItemModalInstance.close();
+            }
         });
     }
 })();

@@ -13,6 +13,7 @@
     function applicationData($q, firebaseDataService) {
         var historyLists = null;
         var items = null;
+        var itemsModified = false;
         var storageAreas = null;
         var serviceInitialized = false;
         var user = null;
@@ -20,6 +21,7 @@
         var service = {
             historyLists: historyLists,
             items: items,
+            itemsModified: itemsModified,
             storageAreas: storageAreas,
             serviceInitialized: serviceInitialized,
             user: user

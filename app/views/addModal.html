@@ -4,21 +4,21 @@
 <div class="modal-body">
     <form>
         <div class="item-group">
-            <label for="edit-item-name">Name</label>
-            <input type="text" id="edit-item-name" class="form-control" placeholder="Name" ng-model="editList.selectedItem.name" />
+            <label for="add-item-name">Name</label>
+            <input type="text" id="add-item-name" class="form-control" placeholder="Name" ng-model="addModal.name" />
         </div>
         <div class="item-group">
-            <label for="edit-item-quantity">Quantity</label>
-            <input type="number" id="edit-item-quantity" class="form-control" placeholder="Quantity" ng-model="editList.selectedItem.quantity" />
+            <label for="add-item-quantity">Quantity</label>
+            <input type="number" id="add-item-quantity" class="form-control" placeholder="Quantity" ng-model="addModal.quantity" />
         </div>
         <div class="item-group">
-            <label for="edit-item-storage-area">Storage Area</label>
-            <select id="edit-item-storage-area" class="form-control" ng-model="editList.selectedItem.storageAreaID">
-                <option ng-repeat="option in editList.storageAreas | toArray | orderBy:'name'" value="{{option.$key}}">{{option.name}}</option>
+            <label for="add-item-storage-area">Storage Area</label>
+            <select id="add-item-storage-area" class="form-control" ng-model="addModal.storageAreaID">
+                <option ng-repeat="option in addModal.storageAreas | toArray | orderBy:'name'" value="{{option.$key}}">{{option.name}}</option>
             </select>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary">Add</button>
+    <button ng-click="addModal.addItem()" class="btn btn-primary">Add</button>
 </div>
