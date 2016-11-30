@@ -8,9 +8,9 @@
         .module('app')
         .controller('EditList', EditList);
 
-    EditList.$inject = ['applicationData', '$uibModal', '$scope'];
+    EditList.$inject = ['applicationData', 'firebaseDataService', '$uibModal', '$scope'];
 
-    function EditList(applicationData, $uibModal, $scope) {
+    function EditList(applicationData, firebaseDataService, $uibModal, $scope) {
         var vm = this;
         vm.addItem = addItem;
         vm.addItemModalInstance = null;
@@ -59,11 +59,21 @@
         }
 
         function remove() {
-
+            firebaseDataService.deleteItem(vm.selectedItemIndex).then(function() {
+                delete applicationData.items[vm.selectedItemIndex];
+                vm.selectedItemIndex = null;
+            })
         }
 
         function save() {
+            firebaseDataService.setItem(vm.selectedItemIndex, vm.selectedItem).then(function() {
+                var item = vm.items[vm.selectedItemIndex];
+                item.name = vm.selectedItem.name;
+                item.quantity = vm.selectedItem.quantity;
+                item.storageAreaID = vm.selectedItem.storageAreaID;
 
+                vm.selectedItemIndex = null;
+            });
         }
 
         $scope.$watch(function() { return applicationData.serviceInitialized; }, function(initialized) {
