@@ -6,11 +6,11 @@
 
     angular
         .module('app')
-        .controller('Log', Log);
+        .controller('History', History);
 
-    Log.$inject = ['applicationData'];
+    History.$inject = ['applicationData'];
 
-    function Log(applicationData, $scope) {
+    function History(applicationData, $scope) {
         var vm = this;
         vm.logList = [
             {date:'1/1/2015', item: 'Fudge Brownies', quantity: 5, cost: 30},

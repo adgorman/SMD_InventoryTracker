@@ -89,6 +89,7 @@
                 return;
             }
             vm.items = applicationData.items;
+            applicationData.itemsModified = false;
             if(vm.addItemModalInstance) {
                 vm.addItemModalInstance.close();
             }
