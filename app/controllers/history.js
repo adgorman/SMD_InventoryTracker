@@ -8,29 +8,36 @@
         .module('app')
         .controller('History', History);
 
-    History.$inject = ['applicationData'];
+    History.$inject = ['applicationData', 'firebaseDataService', '$scope'];
 
-    function History(applicationData, $scope) {
+    function History(applicationData, firebaseDataService, $scope) {
         var vm = this;
-        vm.logList = [
-            {date:'1/1/2015', item: 'Fudge Brownies', quantity: 5, cost: 30},
-            {date:'11/11/2015', item: 'Magic Potion', quantity: 1, cost: 20},
-            {date:'11/11/2015', item: 'Banana', quantity: 1, cost: 1},
-            {date:'2/12/2016', item: 'Fudge Brownies', quantity: 2, cost: 12},
-            {date:'2/12/2016', item: 'Something', quantity: 1, cost: 10},
-            {date:'2/13/2016', item: 'Something Else', quantity: 2, cost: 10}
-        ];
+        vm.items = applicationData.items;
+        vm.logList = [];
 
         activate();
 
         function activate() {
-            sortLogList();
         }
 
-        function sortLogList() {
-            //for(var i = 0; i < vm.logList.length; ++i) {
-            //    vm.logList[i].showDate = i == 0 || vm.logList[i - 1].date != vm.logList[i].date;
-            //}
-        }
+        $scope.$watch(function() { return applicationData.serviceInitialized; }, function(initialized) {
+            if(!initialized) {
+                return;
+            }
+            vm.items = applicationData.items;
+        });
+
+        $scope.$watch(function() { return applicationData.historyLists; }, function(historyLists) {
+            vm.logList = applicationData.historyLists;
+            formatLogList(vm.logList);
+            function formatLogList(logList) {
+                logList = _.mapObject(logList, function(log) {
+                    var date = new Date(log.date);
+                    log.dateString = moment(date).format('M/D/YY');
+                    log.dateTime = date.getTime();
+                    return log;
+                });
+            }
+        });
     }
 })();

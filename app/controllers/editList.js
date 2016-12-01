@@ -15,7 +15,7 @@
         vm.addItem = addItem;
         vm.addItemModalInstance = null;
         vm.editItem = editItem;
-        vm.items = [];
+        vm.items = applicationData.items;
         vm.remove = remove;
         vm.save = save;
         vm.search = "";
@@ -26,7 +26,7 @@
         };
         vm.selectedItemIndex = null;
         vm.selectedItemStorageArea = null;
-        vm.storageAreas = [];
+        vm.storageAreas = applicationData.storageAreas;
 
         activate();
 

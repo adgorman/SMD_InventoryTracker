@@ -62,17 +62,19 @@
             }
 
             var historyList = {
-                date: vm.date,
+                date: vm.date.toString(),
                 itemList: angular.copy(vm.usedSupplies),
                 location: vm.location
             };
+
             var promises = [firebaseDataService.pushHistoryList(historyList)];
 
             _.each(vm.usedSupplies, function(item) {
                 promises.push(firebaseDataService.setItem(item.itemID, angular.copy(vm.items[item.itemID])));
             });
 
-            $q.all(promises).then(function () {
+            $q.all(promises).then(function(data) {
+                applicationData.historyLists[data[0]] = historyList;
                 vm.date = new Date();
                 vm.location = "";
                 vm.usedSupplies = [];

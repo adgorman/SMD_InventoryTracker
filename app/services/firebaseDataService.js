@@ -107,8 +107,8 @@
 
             var historyListRef = firebase.database().ref('historyLists');
             historyListRef.push(object)
-                .then(function() {
-                    deferred.resolve();
+                .then(function(snapshot) {
+                    deferred.resolve(snapshot.key);
                 })
                 .catch(function(error) {
                     deferred.reject("Push failed: " + error.message);

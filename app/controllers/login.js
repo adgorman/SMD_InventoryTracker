@@ -19,7 +19,7 @@
         vm.password = '';
         vm.user = null;
         vm.userList = [
-            {name: 'Street Medicine Detroit', password: 'adam', admin: true},
+            {name: 'Street Medicine Detroit', password: 'WSUsmd123inventory', admin: true},
             {name: 'Guest', admin: false}
         ];
 
@@ -27,7 +27,7 @@
 
         function activate() {
             vm.user = vm.userList[0];
-            applicationData.user = vm.user;
+            // applicationData.user = vm.user;
         }
 
         function login() {

@@ -56,7 +56,7 @@
 
         $scope.$watch(function() { return applicationData.user; }, function(after, before) {
             if(_.isNull(before) && !_.isNull(after)) {
-                editInventoryClick();
+                isAdmin() ? useSuppliesClick() : editInventoryClick();
             } else {
                 logoutClick();
             }
