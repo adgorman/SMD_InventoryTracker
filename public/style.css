@@ -118,6 +118,13 @@ body {
     transform: translateY(-50%);
 }
 
+/* History List */
+.item-row .remove-item {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+}
+
 /* Disable Navbar Collapse */
 .navbar-collapse.collapse{
     display: block !important;
