@@ -46,18 +46,34 @@
             vm.items = applicationData.items;
         });
 
-        $scope.$watch(function() { return applicationData.historyLists; }, function(historyLists) {
-            vm.logList = applicationData.historyLists;
-            formatLogList(vm.logList);
-
-            function formatLogList(logList) {
-                logList = _.mapObject(logList, function(log) {
-                    var date = new Date(log.date);
-                    log.dateString = moment(date).format('M/D/YY');
-                    log.dateTime = date.getTime();
-                    return log;
-                });
-            }
+        $scope.$watchCollection(function() { return applicationData.historyLists; }, function(historyLists) {
+            debugger;
+            vm.logList = formatLogList(historyLists);
         });
+
+        $scope.$watch(function() { return applicationData.user; }, function(user) {
+            if(_.isNull(user)) {
+                return;
+            }
+            vm.logList = formatLogList(applicationData.historyLists);
+        });
+
+        function formatLogList(logList) {
+            if(_.isNull(applicationData.user)) {
+                return null;
+            }
+
+            var formattedLogList = _.mapObject(logList, function(log) {
+                var date = new Date(log.date);
+                log.dateString = moment(date).format('M/D/YY');
+                log.dateTime = date.getTime();
+                return log;
+            });
+            formattedLogList = _.pick(formattedLogList, function(log) {
+                return log.userID == applicationData.user.userID;
+            });
+
+            return formattedLogList;
+        }
     }
 })();

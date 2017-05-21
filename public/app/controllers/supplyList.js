@@ -64,7 +64,8 @@
             var historyList = {
                 date: vm.date.toString(),
                 itemList: angular.copy(vm.usedSupplies),
-                location: vm.location
+                location: vm.location,
+                userID: applicationData.user.userID
             };
 
             var promises = [firebaseDataService.pushHistoryList(historyList)];
