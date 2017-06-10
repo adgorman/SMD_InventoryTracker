@@ -10,10 +10,6 @@
                         <label>User</label>
                         <select id="loginUserSelect" class="form-control" ng-options="option.name for option in login.userList" ng-model="login.user"></select>
                     </div>
-                    <div class="form-group" ng-class="{'has-error':login.badPassword}">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" ng-disabled="!login.needsPassword()" ng-model="login.password" />
-                    </div>
                     <div class="text-center">
                         <input class="btn btn-primary" type="submit" value="Login" />
                     </div>

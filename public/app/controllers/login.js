@@ -12,15 +12,11 @@
 
     function Login(applicationData, $scope) {
         var vm = this;
-        vm.badPassword = false;
-        vm.invalidPassword = false;
         vm.login = login;
-        vm.needsPassword = needsPassword;
-        vm.password = '';
         vm.user = null;
         vm.userList = [
-            {name: 'Street Medicine Detroit', userID: '1', password: 'WSUsmd123inventory', admin: true},
-            {name: 'Street Cares', userID: '2', password: 'adam', admin: true},
+            {name: 'Street Medicine Detroit', userID: '1', admin: true},
+            {name: 'Detroit Street Care', userID: '2', admin: true},
             {name: 'Guest', admin: false}
         ];
 
@@ -32,25 +28,7 @@
         }
 
         function login() {
-            var password = vm.password;
-            vm.badPassword = false;
-            vm.password = '';
-
-            if(needsPassword() && password != vm.user.password) {
-                vm.badPassword = true;
-                return;
-            }
-
             applicationData.user = vm.user;
         }
-
-        function needsPassword() {
-            return !_.isUndefined(vm.user.password);
-        }
-
-        $scope.$watch(function() { return vm.user; }, function() {
-            vm.badPassword = false;
-            vm.password = '';
-        });
     }
 })();
