@@ -21,7 +21,7 @@
         vm.search = "";
         vm.selectedItem = {
             name: null,
-            quantity: null,
+            brand: null,
             storageAreaID: null
         };
         vm.selectedItemIndex = null;
@@ -53,6 +53,7 @@
             var item = vm.items[itemIndex];
             vm.selectedItem = {
                 name: item.name,
+                brand: item.brand,
                 quantity: item.quantity,
                 storageAreaID: item.storageAreaID
             };
@@ -69,6 +70,7 @@
             firebaseDataService.setItem(vm.selectedItemIndex, vm.selectedItem).then(function() {
                 var item = vm.items[vm.selectedItemIndex];
                 item.name = vm.selectedItem.name;
+                item.brand = vm.selectedItem.brand;
                 item.quantity = vm.selectedItem.quantity;
                 item.storageAreaID = vm.selectedItem.storageAreaID;
 
