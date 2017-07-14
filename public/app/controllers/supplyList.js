@@ -29,12 +29,6 @@
         }
 
         function addItem(itemID) {
-            var item = vm.items[itemID];
-            if(item.quantity <= 0) {
-                return;
-            }
-            item.quantity--;
-
             var usedSupply =  _.findWhere(vm.usedSupplies, {itemID: itemID});
             if(_.isUndefined(usedSupply)) {
                 vm.usedSupplies.push({
@@ -53,7 +47,6 @@
             if(usedItem.quantity == 0) {
                 vm.usedSupplies = _.without(vm.usedSupplies, usedItem);
             }
-            vm.items[usedSupplyItemID].quantity++;
         }
 
         function save() {
@@ -68,13 +61,7 @@
                 userID: applicationData.user.userID
             };
 
-            var promises = [firebaseDataService.pushHistoryList(historyList)];
-
-            _.each(vm.usedSupplies, function(item) {
-                promises.push(firebaseDataService.setItem(item.itemID, angular.copy(vm.items[item.itemID])));
-            });
-
-            $q.all(promises).then(function(data) {
+            firebaseDataService.pushHistoryList(historyList).then(function(data) {
                 applicationData.historyLists[data[0]] = historyList;
                 vm.date = new Date();
                 vm.location = "";

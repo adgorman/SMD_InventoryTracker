@@ -47,7 +47,6 @@
         });
 
         $scope.$watchCollection(function() { return applicationData.historyLists; }, function(historyLists) {
-            debugger;
             vm.logList = formatLogList(historyLists);
         });
 

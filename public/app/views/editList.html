@@ -17,9 +17,6 @@
                     class="row item-row selectable">
                 <div><strong>{{item.name}}</strong></div>
                 <div>{{editList.storageAreas[item.storageAreaID].name}}</div>
-                <div class="inventory-item-quantity">
-                    <span class="item-count">{{item.quantity}}</span>
-                </div>
             </div>
         </div>
     </div>
@@ -32,10 +29,6 @@
             <div class="item-group">
                 <label for="edit-item-name">Name</label>
                 <input type="text" id="edit-item-name" class="form-control" placeholder="Name" ng-model="editList.selectedItem.name" />
-            </div>
-            <div class="item-group">
-                <label for="edit-item-quantity">Quantity</label>
-                <input type="number" id="edit-item-quantity" class="form-control" placeholder="Quantity" ng-model="editList.selectedItem.quantity" />
             </div>
             <div class="item-group">
                 <label for="edit-item-storage-area">Storage Area</label>
