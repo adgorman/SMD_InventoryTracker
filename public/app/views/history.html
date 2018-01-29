@@ -6,6 +6,7 @@
                 <div ng-repeat="item in log.itemList">
                     - {{item.quantity}} {{history.items[item.itemID].name}}
                 </div>
+                <div class="list-price"><i>Total cost of the run: ${{log.price}}</i></div>
                 <div class="remove-item">
                     <a href="" ng-click="history.removeList(log)"><i class="fa fa-times"></i></a>
                 </div>

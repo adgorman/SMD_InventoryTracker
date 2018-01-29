@@ -125,6 +125,10 @@ body {
     top: 2px;
 }
 
+.item-row .list-price {
+    margin-top: 5px;
+}
+
 /* Disable Navbar Collapse */
 .navbar-collapse.collapse{
     display: block !important;

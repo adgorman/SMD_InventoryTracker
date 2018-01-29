@@ -22,21 +22,8 @@
         }
 
         function removeList(log) {
-            var promises = [firebaseDataService.deleteHistoryList(log.$key)];
-            _.each(log.itemList, function(item) {
-                var updatedItem = {
-                    name: vm.items[item.itemID].name,
-                    quantity: vm.items[item.itemID].quantity + item.quantity,
-                    storageAreaID: vm.items[item.itemID].storageAreaID
-                };
-                promises.push(firebaseDataService.setItem(item.itemID, updatedItem).then(function() {
-                    applicationData.items[item.itemID].quantity = updatedItem.quantity;
-                }));
-            });
-
-            $q.all(promises).then(function () {
-                delete applicationData.historyLists[log.$key];
-            });
+            firebaseDataService.deleteHistoryList(log.$key);
+            delete applicationData.historyLists[log.$key];
         }
 
         $scope.$watch(function() { return applicationData.serviceInitialized; }, function(initialized) {
@@ -66,6 +53,7 @@
                 var date = new Date(log.date);
                 log.dateString = moment(date).format('M/D/YY');
                 log.dateTime = date.getTime();
+                log.price = getPriceOfList(log.itemList);
                 return log;
             });
             formattedLogList = _.pick(formattedLogList, function(log) {
@@ -73,6 +61,18 @@
             });
 
             return formattedLogList;
+        }
+
+        function getPriceOfList(itemList) {
+            var price = 0;
+
+            _.each(itemList, function(item) {
+                if(!_.isUndefined(vm.items[item.itemID])) {
+                    price += item.quantity * vm.items[item.itemID].price;
+                }
+            });
+
+            return price;
         }
     }
 })();

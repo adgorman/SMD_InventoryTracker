@@ -13,8 +13,9 @@
     function AddModal(applicationData, firebaseDataService, $scope) {
         var vm = this;
         vm.addItem = addItem;
+        vm.brand = "";
         vm.name = "";
-        vm.quantity = 0;
+        vm.price = 0;
         vm.storageAreas = applicationData.storageAreas;
         vm.storageAreaID = null;
 
@@ -25,8 +26,9 @@
 
         function addItem() {
             var item = {
+                brand: vm.brand,
                 name: vm.name,
-                quantity: vm.quantity,
+                price: vm.price,
                 storageAreaID: vm.storageAreaID
             };
             firebaseDataService.pushItem(item).then(function(newItemKey) {

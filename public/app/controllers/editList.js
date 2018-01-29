@@ -20,9 +20,10 @@
         vm.save = save;
         vm.search = "";
         vm.selectedItem = {
-            name: null,
-            brand: null,
-            storageAreaID: null
+            brand: "",
+            name: "",
+            price: "",
+            storageAreaID: ""
         };
         vm.selectedItemIndex = null;
         vm.selectedItemStorageArea = null;
@@ -52,9 +53,9 @@
             vm.selectedItemIndex = itemIndex;
             var item = vm.items[itemIndex];
             vm.selectedItem = {
-                name: item.name,
                 brand: item.brand,
-                quantity: item.quantity,
+                name: item.name,
+                price: item.price,
                 storageAreaID: item.storageAreaID
             };
         }
@@ -69,9 +70,10 @@
         function save() {
             firebaseDataService.setItem(vm.selectedItemIndex, vm.selectedItem).then(function() {
                 var item = vm.items[vm.selectedItemIndex];
-                item.name = vm.selectedItem.name;
+
                 item.brand = vm.selectedItem.brand;
-                item.quantity = vm.selectedItem.quantity;
+                item.name = vm.selectedItem.name;
+                item.price = vm.selectedItem.price;
                 item.storageAreaID = vm.selectedItem.storageAreaID;
 
                 vm.selectedItemIndex = null;
