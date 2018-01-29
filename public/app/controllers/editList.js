@@ -13,9 +13,9 @@
     function EditList(applicationData, firebaseDataService, $uibModal, $scope) {
         var vm = this;
         vm.addItem = addItem;
-        vm.addItemModalInstance = null;
         vm.editItem = editItem;
         vm.items = applicationData.items;
+        vm.modalInstance = null;
         vm.remove = remove;
         vm.save = save;
         vm.search = "";
@@ -36,7 +36,7 @@
         }
 
         function addItem() {
-            vm.addItemModalInstance = $uibModal.open({
+            vm.modalInstance = $uibModal.open({
                 animation: false,
                 templateUrl: 'app/views/addModal.html',
                 controller: 'AddModal',
@@ -61,10 +61,18 @@
         }
 
         function remove() {
-            firebaseDataService.deleteItem(vm.selectedItemIndex).then(function() {
-                delete applicationData.items[vm.selectedItemIndex];
-                vm.selectedItemIndex = null;
-            })
+            vm.modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'app/views/deleteModal.html',
+                controller: 'DeleteModal',
+                controllerAs: 'deleteModal',
+                size: 'large',
+                resolve: {
+                    itemID: function() {
+                        return vm.selectedItemIndex;
+                    }
+                }
+            });
         }
 
         function save() {
@@ -92,10 +100,13 @@
             if(!modified) {
                 return;
             }
+
             vm.items = applicationData.items;
             applicationData.itemsModified = false;
-            if(vm.addItemModalInstance) {
-                vm.addItemModalInstance.close();
+
+            if(vm.modalInstance) {
+                vm.modalInstance.close();
+                vm.selectedItemIndex = null;
             }
         });
     }

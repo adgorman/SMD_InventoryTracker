@@ -44,6 +44,14 @@
             vm.logList = formatLogList(applicationData.historyLists);
         });
 
+        $scope.$watch(function() { return applicationData.itemsModified; }, function(modified) {
+            if(!modified) {
+                return;
+            }
+
+            vm.logList = formatLogList(historyLists);
+        });
+
         function formatLogList(logList) {
             if(_.isNull(applicationData.user)) {
                 return null;

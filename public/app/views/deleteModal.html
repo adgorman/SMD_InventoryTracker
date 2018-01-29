@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4>Delete {{deleteModal.items[deleteModal.itemID].name}}</h4>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="item-group">
+            <b>Warning</b>: Deleting an item is <i>permanent</i>. In addition to removing this item from the
+            inventory list, this action will also remove it from all previous inventory-use histories.
+        </div>
+        <div class="item-group">
+            Before removing an item, please check to see if it can be merged into a replacement item.
+        </div>
+        <div class="item-group">
+            <label for="merge-item-name">Select Existing Replacement Item:</label>
+            <select id="merge-item-name" class="form-control" ng-model="deleteModal.mergeItemID">
+                <option ng-repeat="option in deleteModal.items | toArray | orderBy:'name'" value="{{option.$key}}">{{option.name}}</option>
+            </select>
+        </div>
+        <div class="item-group">
+            <button ng-click="deleteModal.mergeItem()" class="btn btn-primary">Merge</button>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button ng-click="deleteModal.deleteItem()" class="btn btn-danger">Delete</button>
+</div>
