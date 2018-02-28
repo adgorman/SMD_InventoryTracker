@@ -19,6 +19,7 @@
             getStorageAreas: getStorageAreas,
             pushHistoryList: pushHistoryList,
             pushItem: pushItem,
+            setHistoryList: setHistoryList,
             setItem: setItem
         };
 
@@ -127,6 +128,21 @@
                 })
                 .catch(function(error) {
                     deferred.reject("Push failed: " + error.message);
+                });
+
+            return deferred.promise;
+        }
+
+        function setHistoryList(id, object) {
+            var deferred = $q.defer();
+
+            var historyRef = firebase.database().ref('historyLists/' + id);
+            historyRef.set(object)
+                .then(function() {
+                    deferred.resolve();
+                })
+                .catch(function(error) {
+                    deferred.reject("Set failed: " + error.message);
                 });
 
             return deferred.promise;
