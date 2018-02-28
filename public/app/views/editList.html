@@ -15,7 +15,10 @@
                     ng-click="editList.editItem(item.$key)"
                     ng-class="{'selected':editList.selectedItemIndex == item.$key}"
                     class="row item-row selectable">
-                <div><strong>{{item.name}}</strong></div>
+                <div>
+                    <strong>{{item.name}}</strong><span ng-show="item.brand != ''">: <i>{{item.brand}}</i></span>
+                </div>
+
                 <div>{{editList.storageAreas[item.storageAreaID].name}}</div>
             </div>
         </div>
